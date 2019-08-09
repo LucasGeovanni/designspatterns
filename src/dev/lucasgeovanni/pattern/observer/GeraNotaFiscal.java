@@ -1,10 +1,10 @@
-package dev.lucasgeovanni.pattern.builder;
+package dev.lucasgeovanni.pattern.observer;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class geraNotaFiscal {
+public class GeraNotaFiscal {
 
 	private LocalDate data;
 
@@ -14,28 +14,39 @@ public class geraNotaFiscal {
 
 	private List<String> produtos = new ArrayList<>();
 
-	public geraNotaFiscal dataAtual() {
+	private List<RotinaPagamento> rotinas = new ArrayList<>();
+
+	public void adiconaRotina(RotinaPagamento rotina) {
+		rotinas.add(rotina);
+	}
+
+	public GeraNotaFiscal dataAtual() {
 		this.data = LocalDate.now();
 		return this;
 	}
 
-	public geraNotaFiscal valor(Double valor) {
+	public GeraNotaFiscal valor(Double valor) {
 		this.valor = valor;
 		return this;
 	}
 
-	public geraNotaFiscal comObservacoes(String observacao) {
+	public GeraNotaFiscal comObservacoes(String observacao) {
 		this.observacao = observacao;
 		return this;
 	}
 
-	public geraNotaFiscal produto(String produto) {
+	public GeraNotaFiscal produto(String produto) {
 		produtos.add(produto);
 		return this;
 	}
 
 	public String notaFiscal() {
+		executaRotinas();
 		return this.toString();
+	}
+
+	private void executaRotinas() {
+		rotinas.forEach(RotinaPagamento::executa);
 	}
 
 	@Override

@@ -1,6 +1,6 @@
-package dev.lucasgeovanni.pattern.builder;
+package dev.lucasgeovanni.pattern.observer;
 
-public class BuilderMain {
+public class ObserverMain {
 
 	public static void main(String[] args) {
 		
@@ -12,11 +12,13 @@ public class BuilderMain {
 				.valor(1950.00)
 				.produto("Geladeira")
 				.produto("fogão");
-				
+		
+		gerar.adiconaRotina(new EnviarEmail());
+		gerar.adiconaRotina(new EnviarSMS());
+		
 		String nota = gerar.notaFiscal();
 		
 		System.out.println(nota);
-
 	}
 
 }
